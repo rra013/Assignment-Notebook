@@ -15,6 +15,7 @@
 		5BF903AD20F3C2650044B926 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BF903AB20F3C2650044B926 /* LaunchScreen.storyboard */; };
 		5BF903B820F3C2650044B926 /* Assignment_NotebookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF903B720F3C2650044B926 /* Assignment_NotebookTests.swift */; };
 		5BF903C320F3C2650044B926 /* Assignment_NotebookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF903C220F3C2650044B926 /* Assignment_NotebookUITests.swift */; };
+		5BF903D120F3C3230044B926 /* assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF903D020F3C3230044B926 /* assignment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		5BF903BE20F3C2650044B926 /* Assignment NotebookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Assignment NotebookUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF903C220F3C2650044B926 /* Assignment_NotebookUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignment_NotebookUITests.swift; sourceTree = "<group>"; };
 		5BF903C420F3C2650044B926 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5BF903D020F3C3230044B926 /* assignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = assignment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				5BF903A920F3C2650044B926 /* Assets.xcassets */,
 				5BF903AB20F3C2650044B926 /* LaunchScreen.storyboard */,
 				5BF903AE20F3C2650044B926 /* Info.plist */,
+				5BF903D020F3C3230044B926 /* assignment.swift */,
 			);
 			path = "Assignment Notebook";
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BF903D120F3C3230044B926 /* assignment.swift in Sources */,
 				5BF903A520F3C2630044B926 /* DetailViewController.swift in Sources */,
 				5BF903A320F3C2630044B926 /* MasterViewController.swift in Sources */,
 				5BF903A120F3C2630044B926 /* AppDelegate.swift in Sources */,
