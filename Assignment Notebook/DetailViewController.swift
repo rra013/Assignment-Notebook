@@ -12,13 +12,37 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
-
+    @IBOutlet weak var nameLabel: UITextField!
+    @IBOutlet weak var classLabel: UITextField!
+    @IBOutlet weak var descriptionLabel: UITextField!
+    
+    @IBOutlet weak var dateSelector: UIDatePicker!
+    
+    var detailItem: Assignment? {
+        didSet {
+            // Update the view.
+            configureView()
+        }
+    }
+    
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
-            if let label = detailDescriptionLabel {
-                label.text = detail.description
+        if let assignment = detailItem {
+            if nameLabel != nil{
+                nameLabel.text = assignment.name
+                classLabel.text = assignment.className
+                descriptionLabel.text = assignment.description
+                dateSelector.date = Date(timeIntervalSinceNow: 11)
             }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let assignment = self.detailItem{
+            assignment.name = nameLabel.text!
+            assignment.className = classLabel.text!
+            assignment.description = descriptionLabel.text!
+            assignment.dueDate = 10
         }
     }
 
@@ -31,13 +55,6 @@ class DetailViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    var detailItem: Assignment? {
-        didSet {
-            // Update the view.
-            configureView()
-        }
     }
 
 

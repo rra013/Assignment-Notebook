@@ -59,7 +59,7 @@ class MasterViewController: UITableViewController {
             let classTextField = alert.textFields![1] as UITextField
             let descTextField = alert.textFields![2] as UITextField
             let dueDateTextField = alert.textFields![3] as UITextField
-            if (nameTextField.text != "" && classTextField.text != "" && descTextField.text != "" && dueDateTextField.text != ""){
+            if (nameTextField.text != nil && classTextField.text != nil && descTextField.text != nil && dueDateTextField.text != nil){
                 let assignmentToAdd = Assignment(name: nameTextField.text!, className: classTextField.text!, description: descTextField.text!, dueDate: /*formatter.date(from: */Int(dueDateTextField.text!)!/*!)!*/)
                 self.assignments.append(assignmentToAdd)
                 self.tableView.reloadData()
@@ -74,9 +74,10 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let object = assignments[indexPath.row] as! Assignment
+                let object = assignments[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
+                print(object.name)
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -96,7 +97,7 @@ class MasterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let object = assignments[indexPath.row] as! Assignment
+        let object = assignments[indexPath.row]
         cell.textLabel!.text = object.name
         return cell
     }
@@ -112,13 +113,18 @@ class MasterViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-            tableView.beginUpdates()
-            tableView.insertRows(at: [
-                NSIndexPath(row: assignments.count-1, section: 0) as IndexPath
-                ], with: .automatic)
-            tableView.endUpdates()
+//            tableView.beginUpdates()
+//            tableView.insertRows(at: [
+//                NSIndexPath(row: assignments.count-1, section: 0) as IndexPath
+//                ], with: .automatic)
+//            tableView.endUpdates()
 
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let objectToMove = assignments.remove(at: sourceIndexPath.row)
+        assignments.insert(objectToMove, at: destinationIndexPath.row)
     }
 
 
