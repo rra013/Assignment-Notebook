@@ -32,7 +32,7 @@ class DetailViewController: UIViewController {
                 nameLabel.text = assignment.name
                 classLabel.text = assignment.className
                 descriptionLabel.text = assignment.description
-                dateSelector.date = Date(timeIntervalSinceNow: 11)
+                dateSelector.date = assignment.dueDate
             }
         }
     }
@@ -42,7 +42,7 @@ class DetailViewController: UIViewController {
             assignment.name = nameLabel.text!
             assignment.className = classLabel.text!
             assignment.description = descriptionLabel.text!
-            assignment.dueDate = 10
+            assignment.dueDate = dateSelector.date
         }
     }
 

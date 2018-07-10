@@ -12,7 +12,14 @@ class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
     var assignments = [Assignment]()
-
+    
+    let defaults = UserDefaults.standard
+    
+    func saveData(){
+        if let encoded = try? JSONEncoder().encode(assignments){
+            defaults.set(encoded, forKey: "data")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +32,18 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        if let savedData = defaults.object(forKey: "data") as? Data{
+            if let decoded = try? JSONDecoder().decode([Assignment].self, from: savedData){
+                assignments = decoded
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
         tableView.reloadData()
+        saveData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,24 +63,27 @@ class MasterViewController: UITableViewController {
         alert.addTextField { (textField) in
             textField.placeholder = "Description"
         }
-        alert.addTextField { (textField) in
-            textField.placeholder = "Due Date"
-        }
+        let picker = UIDatePicker()
+        picker.frame.size.width = alert.view.frame.size.width
+        picker.frame.size.height = alert.view.frame.size.height/2.0
+        
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancel)
         let insertAction = UIAlertAction(title: "Insert", style: .default){ (action) in
             let nameTextField = alert.textFields![0] as UITextField
             let classTextField = alert.textFields![1] as UITextField
             let descTextField = alert.textFields![2] as UITextField
-            let dueDateTextField = alert.textFields![3] as UITextField
-            if (nameTextField.text != nil && classTextField.text != nil && descTextField.text != nil && dueDateTextField.text != nil){
-                let assignmentToAdd = Assignment(name: nameTextField.text!, className: classTextField.text!, description: descTextField.text!, dueDate: /*formatter.date(from: */Int(dueDateTextField.text!)!/*!)!*/)
+            if (nameTextField.text != nil && classTextField.text != nil && descTextField.text != nil){
+                let assignmentToAdd = Assignment(name: nameTextField.text!, className: classTextField.text!, description: descTextField.text!, dueDate: picker.date)
                 self.assignments.append(assignmentToAdd)
                 self.tableView.reloadData()
             }
         }
         alert.addAction(insertAction)
+        alert.view.frame.size.height *= 2
+        alert.view.frame.size.width *= 2
         present(alert, animated: true, completion: nil)
+        saveData()
     }
 
     // MARK: - Segues
@@ -112,6 +128,7 @@ class MasterViewController: UITableViewController {
         if editingStyle == .delete {
             assignments.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            saveData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
 //            tableView.beginUpdates()
@@ -126,8 +143,8 @@ class MasterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let objectToMove = assignments.remove(at: sourceIndexPath.row)
         assignments.insert(objectToMove, at: destinationIndexPath.row)
+        saveData()
     }
-
 
 }
 

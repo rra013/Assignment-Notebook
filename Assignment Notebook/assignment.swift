@@ -8,12 +8,12 @@
 
 import Foundation
 
-class Assignment{
+class Assignment: Codable{
     var name: String
     var className: String
     var description: String
-    var dueDate: Int//Date
-    init(name: String, className: String, description: String, dueDate: Int/*Date*/) {
+    var dueDate: Date
+    init(name: String, className: String, description: String, dueDate: Date) {
         self.name = name
         self.className = className
         self.description = description
